@@ -1,15 +1,17 @@
 import paho.mqtt.client as mqtt
-from pymongo import MongoClient
 import json
-import redis
+from pymongo import MongoClient
 
-broker_addr         = "mqtt.eclipseprojects.io"
+
+broker_addr         = "mosquitto"
 port                = 1883
 
 temperature_topic   = "sensor/temperature"
 humidity_topic      = "sensor/humidity"
 
-
+mongo_uri           = "mongodb://mqtt-mongodb:27017"
+mongo_client        = MongoClient(mongo_uri)
+db                  = mongo_client["sensor_data"]
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -19,14 +21,29 @@ def on_connect(client, userdata, flags, rc):
         print(f"could not connect, return code: {rc}")
 
 def on_message(client, userdata, message):
-    print(" Message recieved", str(message.payload.decode("utf-8")))
+    try:
+        save_to_db(message)
+        print(" Message stored:- ", str(message.payload.decode("utf-8")))
+    except Exception as exp:
+        print(f"Error in saving data to database",exp)
+
     
+def save_to_db(message):
+
+    payload         = json.loads(message.payload)
+    collection_name = "temperature" if message.topic == temperature_topic else "humidity"
+    collection      = db[collection_name]
+
+    # save to database
+    collection.insert_one(payload)
+    print(f"Saved {collection_name} data to Database. Payload: {payload}")
+
 
 client = mqtt.Client("Subscriber")
 
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect(broker_addr)
+client.connect(broker_addr,port)
 
 client.loop_forever()

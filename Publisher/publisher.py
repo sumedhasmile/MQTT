@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 
-broker_addr         = "mqtt.eclipseprojects.io"
+broker_addr         = "mosquitto"
 port                = 1883
 
 temperature_topic   = "sensor/temperature"
@@ -32,7 +32,7 @@ def publish_message(topic_name, message):
     print(f"Published Message " + topic_name + " with message as " + str(message))
     return (result, mid)
 
-client.connect(broker_addr)
+client.connect(broker_addr,port)
 client.loop_start()
 
 try:
