@@ -1,7 +1,9 @@
 <img width="1500" alt="MQTT" src="https://github.com/sumedhasmile/MQTT/assets/63508421/46aaa968-e169-4106-b0e4-f8850bb8a003">
 
 Publisher:-   The messages of humidity and temperature are published through the MQTT broker to the subscriber at 5-second intervals. 
+
 Subscriber:-  The messages from the publisher are picked up based on sensor type, stored in MongoDB and the latest 10 readings of particular sensor type are stored in Redis DB.
+
 FASTAPI:-     The messages are pulled from MongoDB for the range of timestamps and sensor type, whereas the latest 10 readings are pulled from Redis with sensor type as input.
 
 To Run this code below are the steps to be followed:-
