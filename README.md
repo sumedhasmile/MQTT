@@ -8,12 +8,15 @@ To Run this code below are the steps to be followed:-
 1) Clone this repository
    https://github.com/sumedhasmile/MQTT.git
 2) go into the repository
+   
    cd MQTT
-3) Build the Docker
+4) Build the Docker
+   
    docker-compose build
-4) Run the Docker
+5) Run the Docker
+   
    docker-compose up -d
-5) Go to the below URL of FASTAPI
+7) Go to the below URL of FASTAPI
    http://localhost:8080/docs 
 If want to fetch the data without the above built-in URL then below are the URLs for fetching data separately
 http://localhost:8080/get_last_ten_readings/{sensor-type}/ -> Here sensor-type is humidity or temperature
