@@ -24,7 +24,7 @@ def is_valid_sensor_type(sensor_type: str) -> bool:
     return sensor_type in ALLOWED_SENSOR_TYPES
 
 # Endpoint to get sensor readings for a sensor given the timestamp range
-@app.get("/get_readings/{sensor_type}/")
+@app.get("/get_readings/{sensor_type}/{start}/{end}")
 async def get_readings_for_range( sensor_type: str = Path(..., description="Sensor type"),
                             start: datetime = Query(..., description="Start timestamp"),
                             end: datetime = Query(..., description="End timestamp")):
