@@ -64,3 +64,12 @@ services:
       - mosquitto-net
 
 
+################### FastAPI ######################
+  fast_api:
+    container_name: FastAPI
+    build: 
+      context: ./FastAPI
+    networks:
+      - mosquitto-net
+    ports:
+      - "8080:80"
